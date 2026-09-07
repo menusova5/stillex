@@ -1,0 +1,56 @@
+#! /usr/local/Nuke/ -nx
+version 14.0 v1
+Gizmo {
+ inputs 1
+ tile_color 0x1c1c1cff
+ note_font "Verdana Bold"
+ note_font_color 0xffffffff
+ addUserKnob {20 STILLEX}
+ addUserKnob {26 title l "" +STARTLINE T "<font size='4' color='#ffffff'><b>STILLEX</b></font> <font color='#888888'>// Start & End AI Conditioning</font>"}
+ addUserKnob {4 output_mode l "Output Still" M {"Start Frame" "End Frame" "Original Stream"} +STARTLINE}
+ addUserKnob {3 start_frame l "Start Frame"}
+ start_frame {{"\[value parent.input.first]"}}
+ addUserKnob {3 end_frame l "End Frame"}
+ end_frame {{"\[value parent.input.last]"}}
+ addUserKnob {26 div l "" +STARTLINE}
+ addUserKnob {22 extract_btn l "▷ Extract PNG Stills to Disk" T "import stillex_nuke\nnode = nuke.thisNode()\nin_node = node.input(0)\nif in_node and in_node.Class() == 'Read':\n    stillex_nuke.extract_from_selected_read()\nelse:\n    nuke.message('Connect STILLEX to a Read node first.')" +STARTLINE}
+}
+ Input {
+  inputs 0
+  name Input1
+  xpos 0
+  ypos -150
+ }
+ Dot {
+  name Dot1
+  xpos 34
+  ypos -80
+ }
+set Ndot1 [stack 0]
+ FrameHold {
+  firstFrame {{parent.start_frame}}
+  name FrameHold_Start
+  xpos -120
+  ypos -20
+ }
+push $Ndot1
+ FrameHold {
+  firstFrame {{parent.end_frame}}
+  name FrameHold_End
+  xpos 120
+  ypos -20
+ }
+push $Ndot1
+ Switch {
+  inputs 3
+  which {{parent.output_mode}}
+  name Switch_Output
+  xpos 0
+  ypos 60
+ }
+ Output {
+  name Output1
+  xpos 0
+  ypos 140
+ }
+end_group

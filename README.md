@@ -53,7 +53,30 @@ All exported files strictly follow the naming convention:
 
 ---
 
+## 🔌 Pro Integrations (ComfyUI & Foundry Nuke)
+
+### 1. ComfyUI Custom Node (`integrations/comfyui`)
+Directly feed Start & End conditioning frames into Wan2.1, Kling, SVD, or Runway pipelines inside ComfyUI:
+- Copy `integrations/comfyui` into `ComfyUI/custom_nodes/ComfyUI-STILLEX`.
+- Nodes available:
+  - **`STILLEX • Video Start & End Frame Extractor`**: Outputs `start_frame` and `end_frame` as standard PyTorch `IMAGE` tensors `[1, H, W, 3]` with automatic 64px VAE alignment padding.
+  - **`STILLEX • Batch Video Frame Extractor`**: Batch folder processing.
+- See [`integrations/comfyui/README.md`](file:///c:/Users/Patrik/Documents/antigravity/dazzling-pascal/integrations/comfyui/README.md) for full instructions.
+
+### 2. Foundry Nuke VFX Integration (`integrations/nuke`)
+Built for compositors, matte painters, and AI cleanup artists:
+- Add `integrations/nuke` to your `~/.nuke/` or studio `NUKE_PATH`.
+- Tools included:
+  - **`STILLEX_FrameHold.gizmo`**: Connects downstream to dynamically switch between Start Frame, End Frame, and Sequence.
+  - **Read Node Splitter (`Alt + Shift + S`)**: Automatically extracts stills and creates side-by-side Read nodes in the DAG.
+  - **Dual FrameHold Rig (`Alt + Shift + H`)**: Automatically creates Start Frame & End Frame FrameHold nodes.
+  - **Interactive STILLEX Extractor Node**: Dedicated UI panel inside Nuke.
+- See [`integrations/nuke/README.md`](file:///c:/Users/Patrik/Documents/antigravity/dazzling-pascal/integrations/nuke/README.md) for full instructions.
+
+---
+
 ## 🛠️ Tech Stack
 - **Frontend:** React 19, TypeScript, Vite, Tailwind CSS v4, Lucide Icons, JSZip.
 - **Backend (Optional Local):** FastAPI, Uvicorn, Native FFmpeg 7.1 & FFprobe.
-- **CI/CD:** GitHub Actions -> GitHub Pages automated deployment.
+- **VFX & AI Integrations:** ComfyUI custom node (PyTorch/NumPy), Foundry Nuke Python API & Gizmo.
+- **CI/CD:** GitHub Pages automated deployment via `gh-pages`.
